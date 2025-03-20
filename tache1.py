@@ -1,1 +1,0 @@
-print("Je travaille sur un projet DevOps")

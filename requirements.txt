@@ -1,0 +1,26 @@
+# Django Framework  
+Django>=3.2,<4.0  # Use a stable version, adjust based on your needs  
+
+# Django REST Framework for APIs  
+djangorestframework>=3.12.0,<4.0  
+
+# PostgreSQL Database Adapter (if you're using PostgreSQL)  
+psycopg2-binary>=2.9.1  
+
+# MySQL Database Adapter (if you're using MySQL)  
+mysqlclient>=2.0.3  
+
+# Pillow for image processing  
+Pillow>=8.1.0  
+
+# Requests for HTTP requests  
+requests>=2.26.0  
+
+# Testing framework  
+pytest-django>=4.5.2  
+
+# Other commonly used packages  
+django-cors-headers>=3.10.0  # For handling Cross-Origin Resource Sharing (CORS)  
+django-environ>=0.4.5  # For reading environment variables  
+
+# Add any additional packages your project needs  

@@ -84,6 +84,8 @@ pipeline {
                 bat 'python -m venv venv'
                 bat '.\\venv\\Scripts\\python -m pip install --upgrade pip'
                 bat '.\\venv\\Scripts\\pip install -r requirements.txt'
+                // Install testing dependencies
+                bat '.\\venv\\Scripts\\pip install pytest pytest-django pytest-junit'
             }
         }
 
@@ -99,13 +101,12 @@ pipeline {
         stage('Run Tests') {
             steps {
                 bat '''
-                    .\\venv\\Scripts\\python manage.py test --no-input | tee test_output.log
-                    findstr /C:"Ran 0 tests" test_output.log && exit 1 || exit 0
+                    .\\venv\\Scripts\\pytest --junitxml=junit.xml
                 '''
             }
             post {
                 always {
-                    junit 'test_output.log'  // Requires JUnit plugin configured
+                    junit 'junit.xml'
                 }
             }
         }

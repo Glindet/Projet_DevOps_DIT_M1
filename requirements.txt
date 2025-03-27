@@ -1,13 +1,20 @@
-# Existing packages...  
-Django==5.1.7  
-djangorestframework>=3.15.0  
+# # Existing packages...  
+# Django==5.1.7  
+# djangorestframework>=3.15.0  
 
-requests>=2.26.0  
-# pytest-django>=4.5.2  
-# django-cors-headers>=3.10.0  
-# django-environ>=0.4.5  
+# requests>=2.26.0  
+# # pytest-django>=4.5.2  
+# # django-cors-headers>=3.10.0  
+# # django-environ>=0.4.5  
 
-# Add django-crispy-forms  
-django-crispy-forms>=2.3  # Specify the version suitable for your Django version  
+# # Add django-crispy-forms  
+# django-crispy-forms>=2.3  # Specify the version suitable for your Django version  
 
-# django-crispy-bootstrap4  
+# # django-crispy-bootstrap4  
+
+
+Django==5.1.7
+djangorestframework>=3.15.0
+requests>=2.26.0
+django-crispy-forms>=2.3
+crispy-bootstrap4>=2023.1  # Check for the latest compatible version

@@ -11,3 +11,5 @@ django-environ>=0.4.5
 
 # Add django-crispy-forms  
 django-crispy-forms>=1.14.0  # Specify the version suitable for your Django version  
+
+django-crispy-bootstrap4  

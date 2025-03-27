@@ -2,12 +2,18 @@
   "cSpell.words": [
     "crsf",
     "djangorestframework",
+    "emailext",
+    "findstr",
     "Inachevées",
+    "makemigrations",
+    "runserver",
     "Statistiques",
     "Tâche",
     "Tâches",
     "Terminées",
     "Todoapp",
-    "Totales"
+    "Totales",
+    "venv",
+    "VENV"
   ]
 }

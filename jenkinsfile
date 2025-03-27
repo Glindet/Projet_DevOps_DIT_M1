@@ -1,118 +1,132 @@
-// pipeline {
-//     agent any
+// pipeline {  
+//     agent any  
 
-//     environment {
-//         VENV_DIR = 'venv'
-//     }
+//     environment {  
+//         VENV_DIR = 'venv'  
+//     }  
 
-//     stages {
-//         stage('Recuperation du repository') {
-//             steps {
-//                 git branch: 'main', url: 'https://github.com/Glindet/Projet_DevOps_DIT_M1.git'
-//             }
-//         }
+//     stages {  
+//         stage('Checkout Repository') {  
+//             steps {  
+//                 // Retrieve the code from the repository  
+//                 git branch: 'main', url: 'https://github.com/Glindet/Projet_DevOps_DIT_M1.git'  
+//             }  
+//         }  
 
-//         stage('Setup') {
-//             steps {
-//                 bat 'python -m venv venv' // Crée un environnement virtuel
-//                 // bat '.\\venv\\Scripts\\pip install -r requirements.txt' // Installe les dépendances
-//             }
-//         }
+//         stage('Setup') {  
+//             steps {  
+//                 // Create a virtual environment  
+//                 bat "python -m venv ${VENV_DIR}"  
+//                 // Install dependencies  
+//                 bat ".\\${VENV_DIR}\\Scripts\\pip install -r requirements.txt" // Ensure requirements.txt exists  
+//             }  
+//         }  
 
-//         stage('Run Script') {
-//             steps {
-//                 bat '.\\venv\\Scripts\\python app.py' // Exécute le script Python
-//             }
-//         }
+//         stage('Run Migrations') {  
+//             steps {  
+//                 // Apply database migrations  
+//                 bat ".\\${VENV_DIR}\\Scripts\\python manage.py migrate"  
+//             }  
+//         }  
 
-//         stage('Notify') {
-//             steps {
-//                 script {
-//                     def result = currentBuild.result ?: 'SUCCESS'
-//                     emailext subject: "Jenkins Build: ${result}",
-//                         body: "Build Status: ${result}\nVoir Jenkins: ${env.BUILD_URL}",
-//                         to: 'glindetolivier@gmail.com'
-//                 }
-//             }
-//         }
-//     }
+//         stage('Run Tests') {  
+//             steps {  
+//                 // Run the Django tests (optional)  
+//                 bat ".\\${VENV_DIR}\\Scripts\\python manage.py test"  
+//             }  
+//         }  
 
-//     post {
-//         failure {
-//             emailext subject: "Échec du build Jenkins",
-//                 body: "Échec du pipeline : ${env.BUILD_URL}",
-//                 to: 'glindetolivier@gmail.com'
-//         }
-//     }
-// }
-
-
-
-
-pipeline {  
-    agent any  
-
-    environment {  
-        VENV_DIR = 'venv'  
-    }  
-
-    stages {  
-        stage('Checkout Repository') {  
-            steps {  
-                // Retrieve the code from the repository  
-                git branch: 'main', url: 'https://github.com/Glindet/Projet_DevOps_DIT_M1.git'  
-            }  
-        }  
-
-        stage('Setup') {  
-            steps {  
-                // Create a virtual environment  
-                bat "python -m venv ${VENV_DIR}"  
-                // Install dependencies  
-                bat ".\\${VENV_DIR}\\Scripts\\pip install -r requirements.txt" // Ensure requirements.txt exists  
-            }  
-        }  
-
-        stage('Run Migrations') {  
-            steps {  
-                // Apply database migrations  
-                bat ".\\${VENV_DIR}\\Scripts\\python manage.py migrate"  
-            }  
-        }  
-
-        stage('Run Tests') {  
-            steps {  
-                // Run the Django tests (optional)  
-                bat ".\\${VENV_DIR}\\Scripts\\python manage.py test"  
-            }  
-        }  
-
-        // stage('Run Server') {  
-        //     steps {  
-        //         // Start the Django development server (optional)  
-        //         bat ".\\${VENV_DIR}\\Scripts\\python manage.py runserver 0.0.0.0:8000"  
+//         // stage('Run Server') {  
+//         //     steps {  
+//         //         // Start the Django development server (optional)  
+//         //         bat ".\\${VENV_DIR}\\Scripts\\python manage.py runserver 0.0.0.0:8000"  
                 
-        //         // Note: This will block further execution; consider running as a background task if needed  
-        //     }  
-        // }  
+//         //         // Note: This will block further execution; consider running as a background task if needed  
+//         //     }  
+//         // }  
 
-        stage('Notify') {  
-            steps {  
-                script {  
-                    def result = currentBuild.result ?: 'SUCCESS'  
-                    emailext subject: "Jenkins Build: ${result}",  
-                        body: "Build Status: ${result}\nView Jenkins: ${env.BUILD_URL}",  
-                        to: 'glindetolivier@gmail.com'  
-                }  
-            }  
-        }  
-    }  
+//         stage('Notify') {  
+//             steps {  
+//                 script {  
+//                     def result = currentBuild.result ?: 'SUCCESS'  
+//                     emailext subject: "Jenkins Build: ${result}",  
+//                         body: "Build Status: ${result}\nView Jenkins: ${env.BUILD_URL}",  
+//                         to: 'glindetolivier@gmail.com'  
+//                 }  
+//             }  
+//         }  
+//     }  
 
-    post {  
-        failure {  
-            emailext subject: "Jenkins Build Failed",  
-                body: "Pipeline failure: ${env.BUILD_URL}",  
-                to: 'glindetolivier@gmail.com'  
-        }  
-    }  
-}  
+//     post {  
+//         failure {  
+//             emailext subject: "Jenkins Build Failed",  
+//                 body: "Pipeline failure: ${env.BUILD_URL}",  
+//                 to: 'glindetolivier@gmail.com'  
+//         }  
+//     }  
+// }  
+
+
+
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout Repository') {
+            steps {
+                git url: 'https://github.com/Glindet/Projet_DevOps_DIT_M1.git', branch: 'main'
+            }
+        }
+
+        stage('Setup') {
+            steps {
+                bat 'python -m venv venv'
+                bat '.\\venv\\Scripts\\python -m pip install --upgrade pip'
+                bat '.\\venv\\Scripts\\pip install -r requirements.txt'
+            }
+        }
+
+        stage('Run Migrations') {
+            steps {
+                bat '''
+                    .\\venv\\Scripts\\python manage.py makemigrations
+                    .\\venv\\Scripts\\python manage.py migrate
+                '''
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                bat '''
+                    .\\venv\\Scripts\\python manage.py test --no-input | tee test_output.log
+                    findstr /C:"Ran 0 tests" test_output.log && exit 1 || exit 0
+                '''
+            }
+            post {
+                always {
+                    junit 'test_output.log'  // Requires JUnit plugin configured
+                }
+            }
+        }
+
+        stage('Notify') {
+            steps {
+                script {
+                    emailext (
+                        subject: 'Build Result: ${PROJECT_NAME} - Build # ${BUILD_NUMBER} - ${BUILD_STATUS}',
+                        body: '''${SCRIPT, template="groovy-html.template"}''',
+                        to: 'glindetolivier@gmail.com',
+                        attachLog: true
+                    )
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}

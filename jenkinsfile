@@ -20,7 +20,15 @@ pipeline {
                 // Install dependencies  
                 bat ".\\${VENV_DIR}\\Scripts\\pip install -r requirements.txt" // Ensure requirements.txt exists  
             }  
-        }  
+        }
+
+        // New migration generation stage added here
+        stage('Create Migrations') {
+            steps {
+                bat '.\\venv\\Scripts\\python manage.py makemigrations'
+            }
+        }
+
 
         stage('Run Migrations') {  
             steps {  

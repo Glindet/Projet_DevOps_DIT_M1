@@ -37,21 +37,7 @@ pipeline {
             }  
         }  
 
-        // stage('Run Tests') {  
-        //     steps {  
-        //         // Run the Django tests (optional)  
-        //         bat ".\\${VENV_DIR}\\Scripts\\python manage.py test"  
-        //     }  
-        // }  
-
-        // stage('Run Server') {  
-        //     steps {  
-        //         // Start the Django development server (optional)  
-        //         bat ".\\${VENV_DIR}\\Scripts\\python manage.py runserver 0.0.0.0:8000"  
-                
-        //         // Note: This will block further execution; consider running as a background task if needed  
-        //     }  
-        // }  
+       
 
         stage('Notify') {  
             steps {  
@@ -73,69 +59,3 @@ pipeline {
         }  
     }  
 }  
-
-
-
-
-// pipeline {
-//     agent any
-
-//     stages {
-//         stage('Checkout Repository') {
-//             steps {
-//                 git url: 'https://github.com/Glindet/Projet_DevOps_DIT_M1.git', branch: 'main'
-//             }
-//         }
-
-//         stage('Setup') {
-//             steps {
-//                 bat 'python -m venv venv'
-//                 bat '.\\venv\\Scripts\\python -m pip install --upgrade pip'
-//                 bat '.\\venv\\Scripts\\pip install -r requirements.txt'
-//                 // Install testing dependencies
-//                 bat '.\\venv\\Scripts\\pip install pytest pytest-django pytest-junit'
-//             }
-//         }
-
-//         stage('Run Migrations') {
-//             steps {
-//                 bat '''
-//                     .\\venv\\Scripts\\python manage.py makemigrations
-//                     .\\venv\\Scripts\\python manage.py migrate
-//                 '''
-//             }
-//         }
-
-//         stage('Run Tests') {
-//             steps {
-//                 bat '''
-//                     .\\venv\\Scripts\\pytest --junitxml=junit.xml
-//                 '''
-//             }
-//             post {
-//                 always {
-//                     junit 'junit.xml'
-//                 }
-//             }
-//         }
-
-//         stage('Notify') {
-//             steps {
-//                 script {
-//                     emailext (
-//                         subject: 'Build Result: ${PROJECT_NAME} - Build # ${BUILD_NUMBER} - ${BUILD_STATUS}',
-//                         body: '''${SCRIPT, template="groovy-html.template"}''',
-//                         to: 'glindetolivier@gmail.com',
-//                         attachLog: true
-//                     )
-//                 }
-//             }
-//         }
-//     }
-
-//     post {
-//         always {
-//             cleanWs()
-//         }
-//     }
-// }
